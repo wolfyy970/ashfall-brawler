@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ashfall / weapon range</title>
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #091016;
+        color: #c5ced2;
+        font:
+          13px system-ui,
+          sans-serif;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+      header {
+        position: absolute;
+        top: 26px;
+        left: 30px;
+        pointer-events: none;
+      }
+      h1 {
+        font-size: 19px;
+        letter-spacing: 0.17em;
+        font-weight: 500;
+        margin: 0 0 9px;
+      }
+      header p {
+        color: #7c909c;
+        margin: 0;
+        font-size: 12px;
+      }
+      .back {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        color: #95a7b1;
+        text-decoration: none;
+      }
+      .panel {
+        position: absolute;
+        bottom: 25px;
+        left: 30px;
+        right: 30px;
+        padding: 18px 20px;
+        background: #10191fea;
+        border: 1px solid #29343d;
+        display: flex;
+        gap: 20px;
+        align-items: end;
+        flex-wrap: wrap;
+      }
+      .field {
+        display: grid;
+        gap: 7px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #9baab3;
+      }
+      .field select {
+        min-width: 170px;
+      }
+      select,
+      button {
+        font: 12px system-ui;
+        border: 1px solid #3d4c55;
+        background: #15212a;
+        color: #d2dde2;
+        border-radius: 2px;
+        padding: 9px 12px;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:hover {
+        background: #283a47;
+      }
+      button[aria-pressed='true'] {
+        border-color: #bc955f;
+      }
+      .field input {
+        width: 145px;
+        accent-color: #ac895a;
+      }
+      output {
+        color: #d5dfe5;
+        font-size: 11px;
+        letter-spacing: 0.03em;
+        text-transform: none;
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+      }
+      #event {
+        position: absolute;
+        left: 30px;
+        top: 104px;
+        color: #bda47a;
+        font: 12px monospace;
+      }
+      #metrics {
+        position: absolute;
+        right: 30px;
+        top: 64px;
+        color: #758995;
+        font: 11px monospace;
+      }
+      #error {
+        position: absolute;
+        top: 40%;
+        left: 20%;
+        right: 20%;
+        color: #e8a895;
+      }
+      #stages {
+        position: absolute;
+        left: 30px;
+        top: 134px;
+        color: #637784;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+      #stages b {
+        color: #e1c7a0;
+        font-weight: 500;
+      }
+      @media (max-width: 700px) {
+        .panel {
+          left: 12px;
+          right: 12px;
+          bottom: 12px;
+          gap: 12px;
+          padding: 12px;
+        }
+        .field input {
+          width: 110px;
+        }
+        header {
+          left: 18px;
+          top: 18px;
+        }
+        h1 {
+          font-size: 15px;
+        }
+        .back {
+          right: 18px;
+          top: 18px;
+        }
+        #event,
+        #stages {
+          left: 18px;
+        }
+        #metrics {
+          top: 80px;
+          right: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>WEAPON STUDY / 05</h1>
+      <p>Physical barrels · shield → hull · measured contact speed</p>
+    </header>
+    <a class="back" href="./">Return to wreckfield ↗</a>
+    <div id="event">Preparing physical muzzle nodes…</div>
+    <div id="stages"></div>
+    <output id="metrics"></output>
+    <output
+      id="contact-speed"
+      style="position: absolute; right: 30px; top: 86px; color: #bda47a; font: 11px monospace"
+    ></output>
+    <div class="panel">
+      <label class="field"
+        >Weapon<select id="weapon">
+          <option value="missile">Six-tube missile pod</option>
+          <option value="cannon">SC-200 compact quad</option>
+          <option value="cannon-twin">SC-200 compact twin</option>
+          <option value="pulse">Twin pulse emitter</option>
+          <option value="rail">Twin railgun</option>
+        </select></label
+      >
+      <label class="field"
+        >Target defense<select id="defense">
+          <option value="shield">Standard shield</option>
+          <option value="hardened">EM / thermal hardened</option>
+          <option value="weak">Shield at 1% strength</option>
+          <option value="hull">Shield down · exposed hull</option>
+        </select></label
+      >
+      <label class="field"
+        >Launch speed<output id="speed-value"></output
+        ><input id="speed" aria-label="Launch speed" type="range" min="20" max="180" step="1"
+      /></label>
+      <label class="field"
+        >Visible length<output id="length-value"></output
+        ><input id="length" aria-label="Visible length" type="range" min="3" max="10" step=".1"
+      /></label>
+      <label class="field"
+        >Salvo<select id="salvo">
+          <option value="3">3 missiles together</option>
+          <option value="6">6 missiles together</option>
+          <option value="2">2 missiles together</option>
+          <option value="1">Single missile</option>
+          <option value="ripple">6 missiles · timed ripple</option>
+          <option value="all">All barrels together</option>
+        </select></label
+      >
+      <label class="field"
+        >View<select id="view">
+          <option value="range">Whole flight</option>
+          <option value="launch">Muzzle close-up</option>
+          <option value="impact">Impact close-up</option>
+        </select></label
+      >
+      <div class="controls">
+        <button id="fire" disabled>Fire salvo</button
+        ><button id="volley" disabled>Three salvos</button
+        ><button id="slow" aria-pressed="false">¼ speed</button><button id="pause">Pause</button
+        ><button id="step" disabled>Step</button><button id="reset">Reset</button>
+      </div>
+    </div>
+    <div id="error" hidden></div>
+    <script type="module" src="./weapon-range.js"></script>
+  </body>
+</html>

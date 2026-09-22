@@ -1,0 +1,9 @@
+export class BattleAudio{
+constructor(){this.ctx=null;this.enabled=false;this.voices=0;}
+async unlock(){if(!this.ctx){this.ctx=new AudioContext();this.master=this.ctx.createGain();this.master.gain.value=.24;this.master.connect(this.ctx.destination);this.noise=this.ctx.createBuffer(1,this.ctx.sampleRate,this.ctx.sampleRate);const d=this.noise.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;}await this.ctx.resume();this.enabled=true;}
+mute(value){this.enabled=!value;if(this.master)this.master.gain.setTargetAtTime(value?0:.24,this.ctx.currentTime,.05);}
+play(kind,x=0){if(!this.enabled||!this.ctx||this.voices>18)return;const ctx=this.ctx,t=ctx.currentTime;this.voices++;const gain=ctx.createGain(),pan=ctx.createStereoPanner();pan.pan.value=Math.max(-.8,Math.min(.8,x/36));gain.connect(pan).connect(this.master);
+const noisy=['cannon','impact','destroy','missile'].includes(kind),src=noisy?ctx.createBufferSource():ctx.createOscillator(),filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=kind==='destroy'?650:kind==='cannon'?1900:kind==='impact'?1200:4000;src.connect(filter).connect(gain);let length=kind==='destroy'?1.2:kind==='missile'?.6:kind==='rail'?.35:.18;
+if(noisy)src.buffer=this.noise;else{src.type=kind==='web'?'sine':'triangle';src.frequency.setValueAtTime(kind==='rail'?1100:kind==='web'?320:720,t);src.frequency.exponentialRampToValueAtTime(kind==='web'?80:140,t+length);}
+const volume=kind==='destroy'?.65:kind==='cannon'?.2:kind==='impact'?.12:kind==='web'?.13:.2;gain.gain.setValueAtTime(.001,t);gain.gain.linearRampToValueAtTime(volume,t+.008);gain.gain.exponentialRampToValueAtTime(.001,t+length);src.start(t);src.stop(t+length+.02);src.onended=()=>{this.voices--;src.disconnect();filter.disconnect();gain.disconnect();pan.disconnect();};}
+}

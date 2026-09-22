@@ -1,0 +1,62 @@
+[
+  {
+    "file": "interceptor-rust.glb",
+    "bytes": 8389044,
+    "hardpoints": [
+      "HP_S01_PORT",
+      "HP_S02_STARBOARD",
+      "HP_S03_CENTRE"
+    ],
+    "canopy": [
+      "Cockpit_Inset"
+    ],
+    "sha256": "1678185c4ee92ec56e982f046bf5932ec8162f7b5290d1e4cc7ec4bf6d1d3573",
+    "triangles": 12132
+  },
+  {
+    "file": "interceptor-slate.glb",
+    "bytes": 8416960,
+    "hardpoints": [
+      "HP_S01_PORT",
+      "HP_S02_STARBOARD",
+      "HP_S03_CENTRE"
+    ],
+    "canopy": [
+      "Cockpit_Inset"
+    ],
+    "sha256": "017e0c35479d033fa199eacb95c6f7f09413dae6e0d84c735ed3cc7fda0c1885",
+    "triangles": 12132
+  },
+  {
+    "file": "brawler-olive.glb",
+    "bytes": 3729976,
+    "hardpoints": [
+      "HP_S01_PORT",
+      "HP_S02_STARBOARD",
+      "HP_S03_CENTRE"
+    ],
+    "canopy": [],
+    "sha256": "3751891b4189cdd54d6ff93c94c5e45139d9d71f8f46a8b9b8a764c54e859e99",
+    "triangles": 12408
+  },
+  {
+    "file": "brawler-oxblood.glb",
+    "bytes": 3729976,
+    "hardpoints": [
+      "HP_S01_PORT",
+      "HP_S02_STARBOARD",
+      "HP_S03_CENTRE"
+    ],
+    "canopy": [],
+    "sha256": "5e4923c61d421ef08477c64053fb5c1bf80ea982fa2ea6b7f77614053886794b",
+    "triangles": 12408
+  },
+  {
+    "file": "derelict-drydock.glb",
+    "bytes": 3905448,
+    "hardpoints": [],
+    "canopy": [],
+    "sha256": "def0a614d9abd433336ab283d5140165b31f138b7f4d9e81bbbde693845d7b3a",
+    "triangles": 16552
+  }
+]

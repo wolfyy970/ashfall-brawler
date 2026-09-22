@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#080e14" />
+    <title>Ashfall — Industrial Frontier</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }
+    </script>
+  </head>
+  <body>
+    <main id="stage" aria-label="Live three-dimensional space combat"></main>
+    <header class="hud">
+      <div class="brand">
+        <span class="eyebrow">INDUSTRIAL FRONTIER</span>
+        <h1>ASHFALL<span> / 01</span></h1>
+        <p>BREAKER YARD <b>·</b> VISUAL STUDY</p>
+        <a class="asset-review" href="./weapon-range.html">Weapon firing range ↗</a>
+      </div>
+      <div class="top-right">
+        <div id="clock">00:00 <span>SCENE TIME</span></div>
+        <nav aria-label="Scene controls">
+          <select id="pass" aria-label="Art pass">
+            <option value="all">Full scene</option>
+            <option value="environment">Background</option>
+            <option value="thrusters">Thrusters</option>
+            <option value="shields">Shields</option>
+            <option value="armor">Armor / hull</option>
+            <option value="weapons">Weapons</option>
+          </select>
+          <button
+            id="flight"
+            aria-pressed="false"
+            title="Move ships around one another; turn off to hold their positions"
+          >
+            Flight
+          </button>
+          <button id="pause" title="Pause or resume · Space" aria-label="Pause">Ⅱ</button>
+          <button id="slow" aria-pressed="false">½×</button>
+          <button id="camera">Tactical</button>
+          <button id="sound" aria-pressed="false">Sound off</button>
+          <button id="reset" title="Restart engagement · R">↻</button>
+        </nav>
+      </div>
+    </header>
+    <div id="feed" class="hud" aria-live="polite"></div>
+    <div id="intro">
+      <div class="intro-rule"></div>
+      <span class="eyebrow">FOUR PILOTS. NO SAFE ORBIT.</span>
+      <h2>Welcome to<br />the graveyard.</h2>
+      <p>
+        Two hulls. Four loadouts. An industrial wreckfield.<br />Watch the opening exchange, then
+        follow the fight.
+      </p>
+      <button id="begin" disabled>Preparing ships…</button>
+      <div id="loading" role="status">Loading flight assets</div>
+      <small>Scripted combat study · Headphones recommended</small>
+    </div>
+    <footer class="hud">
+      <div class="roster" id="roster" aria-label="Follow a pilot"></div>
+      <div class="footer-line">
+        <span id="engagement">AUTONOMOUS FLIGHT / ALL VS ALL</span
+        ><span>SCROLL TO ZOOM <i>·</i> SPACE PAUSE <i>·</i> C CAMERA <i>·</i> H HIDE UI</span>
+      </div>
+    </footer>
+    <div id="error" role="alert" hidden></div>
+    <script type="module" src="./main.js?v=flight-20260907"></script>
+  </body>
+</html>
