@@ -1,5 +1,16 @@
 # Ashfall Brawler — local Three.js combat prototype
 
+## Watch
+
+Silent films made from the actual game and ship-fit prototypes. Click a preview to open the full 1080p MP4.
+
+| Breaker's Yard combat · 30 seconds | Kestrel fit study · 28 seconds |
+| --- | --- |
+| [![Preview of the Breaker's Yard combat film](media/breakers-yard-combat-preview.gif)](https://raw.githubusercontent.com/wolfyy970/ashfall-brawler/main/media/breakers-yard-combat-silent.mp4) | [![Preview of the Kestrel fit-study film](media/kestrel-fit-study-preview.gif)](https://raw.githubusercontent.com/wolfyy970/ashfall-brawler/main/media/kestrel-fit-study-silent.mp4) |
+| [Watch or download the full combat film](https://raw.githubusercontent.com/wolfyy970/ashfall-brawler/main/media/breakers-yard-combat-silent.mp4) | [Watch or download the full fit-study film](https://raw.githubusercontent.com/wolfyy970/ashfall-brawler/main/media/kestrel-fit-study-silent.mp4) |
+
+The full films are also available in [`media/`](media/).
+
 Run this repository from a local static HTTP server, then open `http://127.0.0.1:8767/`. For example:
 
 ```sh
